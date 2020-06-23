@@ -130,6 +130,6 @@ for epoch in range(1, epoch + 1):
     print('| eval | time: {:2.2f}s | loss {:.4f} | accuracy {}% ({}/{})'.format(time_elapse, loss, acc, corrects, size))
     print('-' * 10)
 
-# Saves the trained model.
-print('Going to save the model ...')
-torch.save(model, 'classify_resnet_152.pth')
+    # Saves the trained model.
+    print('Going to save the model ...')
+    torch.save(model, 'classify_resnet_152_{}.pth'.format(epoch))
