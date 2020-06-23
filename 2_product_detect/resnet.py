@@ -14,6 +14,8 @@ learning_rate = 0.01
 epoch = 100
 # Defines the percentage of data used for training.
 training_percent = 0.8
+# Defines the number of classes.
+num_classes = 42
 
 # Defines how to pre-process the image data.
 transform = transforms.Compose([transforms.RandomResizedCrop(200),
@@ -33,7 +35,7 @@ eval_loader = torch.utils.data.DataLoader(dataset=eval_data, batch_size=batch_si
 
 # Creates the model.
 model = models.resnet152(pretrained=True)							# Initializes ResNet with 512 layers.
-model.fc = torch.nn.Linear(2048, 2)									# Changes the output FC (fully conected) layer.
+model.fc = torch.nn.Linear(2048, num_classes)						# Changes the output FC (fully conected) layer.
 model = model.cuda()												# Uses GPU to accelerate the training.
 criterion = torch.nn.CrossEntropyLoss()								# Defines the loss function.
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)	# Defines the optimizer function.
