@@ -34,14 +34,14 @@ train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=batch_
 eval_loader = torch.utils.data.DataLoader(dataset=eval_data, batch_size=batch_size, shuffle=False)
 
 # Creates the model.
-model = models.resnet152(pretrained=True)							# Initializes ResNet with 512 layers.
-model.fc = torch.nn.Linear(2048, num_classes)						# Changes the output FC (fully conected) layer.
-model = model.cuda()												# Uses GPU to accelerate the training.
-criterion = torch.nn.CrossEntropyLoss()								# Defines the loss function.
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)	# Defines the optimizer function.
+model = models.resnet152(pretrained=True)                           # Initializes ResNet with 512 layers.
+model.fc = torch.nn.Linear(2048, num_classes)                       # Changes the output FC (fully conected) layer.
+model = model.cuda()                                                # Uses GPU to accelerate the training.
+criterion = torch.nn.CrossEntropyLoss()                             # Defines the loss function.
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)  # Defines the optimizer function.
 
 def train():
-	# Enables the training mode.
+    # Enables the training mode.
     model.train()
 
     total_loss = 0
@@ -63,7 +63,7 @@ def train():
     return total_loss / float(len(train_loader))
 
 def evaluate():
-	# Enables the evaluation mode.
+    # Enables the evaluation mode.
     model.eval()
 
     eval_loss = 0
@@ -88,12 +88,12 @@ accuracy = []
 
 # Repeats for # of times.
 for epoch in range(1, epoch + 1):
-	# Marks the start of current epoch.
-	print('-' * 10)
-	print('| # epoch {:3d} | current time {}'.format(epoch, time.ctime()))
-	print('-' * 10)
-
-	# Performs training.
+    # Marks the start of current epoch.
+    print('-' * 10)
+    print('| # epoch {:3d} | current time {}'.format(epoch, time.ctime()))
+    print('-' * 10)
+    
+    # Performs training.
     start_time = time.time()
     loss = train()
     train_loss.append(loss * 1000.)
