@@ -17,7 +17,7 @@ training_percent = 0.8
 # Defines the number of classes.
 num_classes = 42
 # Defines the batch size to print progress.
-print_batch_size = 50
+print_batch_size = 10
 
 # Defines how to pre-process the image data.
 transform = transforms.Compose([transforms.RandomResizedCrop(200),
