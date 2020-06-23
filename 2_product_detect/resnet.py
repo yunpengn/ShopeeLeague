@@ -85,6 +85,11 @@ total_start_time = time.time()
 
 # Repeats for # of times.
 for epoch in range(1, epoch + 1):
+	# Marks the start of current epoch.
+	print('-' * 10)
+	print('| # epoch {:3d}'.format(epoch))
+	print('-' * 10)
+
 	# Performs training.
     epoch_start_time = time.time()
     loss = train()
@@ -92,7 +97,7 @@ for epoch in range(1, epoch + 1):
 
     # Prints result.
     time_elapse = time.time() - epoch_start_time
-    print('| start of epoch {:3d} | time: {:2.2f}s | loss {:5.6f}'.format(epoch, time_elapse, loss))
+    print('| train | time: {:2.2f}s | loss {:5.6f}'.format(time_elapse, loss))
     print('-' * 10)
 
     # Performs evaluation.
@@ -102,5 +107,5 @@ for epoch in range(1, epoch + 1):
 
     # Prints result.
     time_elapse = time.time() - epoch_start_time
-    print('| end of epoch {:3d} | time: {:2.2f}s | loss {:.4f} | accuracy {}%({}/{})'.format(epoch, time_elapse, loss, acc, corrects, size))
+    print('| eval | time: {:2.2f}s | loss {:.4f} | accuracy {}%({}/{})'.format(time_elapse, loss, acc, corrects, size))
     print('-' * 10)
