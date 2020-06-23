@@ -1,5 +1,5 @@
 source ../.env/bin/activate
 
-python3 resnet.py
+python3 -u resnet.py
 
 ../../notify.sh
