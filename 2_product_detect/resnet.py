@@ -20,12 +20,12 @@ transform = transforms.Compose([transforms.RandomResizedCrop(200),
                                 transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])])
 
 # Defines where the image datasets are located.
-trainData = dsets.ImageFolder('./data/train', transform=transform)
-testData = dsets.ImageFolder('./data/test', transform=transform)
+train_data = dsets.ImageFolder('./data/train', transform=transform)
+test_data = dsets.ImageFolder('./data/test', transform=transform)
 
 # Defines the input data.
-trainLoader = torch.utils.data.DataLoader(dataset=trainData, batch_size=batch_size, shuffle=True)
-testLoader = torch.utils.data.DataLoader(dataset=testData, batch_size=batch_size, shuffle=False)
+train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=batch_size, shuffle=True)
+test_loader = torch.utils.data.DataLoader(dataset=test_data, batch_size=batch_size, shuffle=False)
 
 # Creates the model.
 model = models.resnet152(pretrained=True)							# Initializes ResNet with 512 layers.
@@ -45,7 +45,7 @@ def train():
     total_loss = 0
 
     # Iterates through each image in train set.
-    for image, label in trainLoader:
+    for image, label in train_loader:
         image = Variable(image.cuda())
         label = Variable(label.cuda())
         optimizer.zero_grad()
@@ -58,7 +58,7 @@ def train():
         total_loss += loss.item()
 
     # Returns loss rate.
-    return total_loss / float(len(trainLoader))
+    return total_loss / float(len(train_loader))
 
 def evaluate():
 	# Enables the evaluation mode.
@@ -68,7 +68,7 @@ def evaluate():
     eval_loss = 0
 
     # Iterates through each image in test set.
-    for image, label in testLoader:
+    for image, label in test_loader:
         image = Variable(image.cuda())
         label = Variable(label.cuda())
         pred = model(image)
@@ -78,7 +78,7 @@ def evaluate():
         corrects += (torch.max(pred, 1)[1].view(label.size()).data == label.data).sum()
 
     # Returns loss rate.
-    return eval_loss / float(len(testLoader)), corrects, corrects * 100.0 / len(testLoader), len(testLoader)
+    return eval_loss / float(len(test_loader)), corrects, corrects * 100.0 / len(test_loader), len(test_loader)
 
 best_acc = None
 total_start_time = time.time()
