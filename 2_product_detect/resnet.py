@@ -21,11 +21,11 @@ transform = transforms.Compose([transforms.RandomResizedCrop(200),
 
 # Defines where the image datasets are located.
 train_data = dsets.ImageFolder('./data/train', transform=transform)
-test_data = dsets.ImageFolder('./data/test', transform=transform)
+eval_data = dsets.ImageFolder('./data/test', transform=transform)
 
 # Defines the input data.
 train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=batch_size, shuffle=True)
-test_loader = torch.utils.data.DataLoader(dataset=test_data, batch_size=batch_size, shuffle=False)
+eval_loader = torch.utils.data.DataLoader(dataset=eval_data, batch_size=batch_size, shuffle=False)
 
 # Creates the model.
 model = models.resnet152(pretrained=True)							# Initializes ResNet with 512 layers.
@@ -64,7 +64,7 @@ def evaluate():
     eval_loss = 0
 
     # Iterates through each image in test set.
-    for image, label in test_loader:
+    for image, label in eval_loader:
         image = Variable(image.cuda())
         label = Variable(label.cuda())
         pred = model(image)
@@ -74,7 +74,7 @@ def evaluate():
         corrects += (torch.max(pred, 1)[1].view(label.size()).data == label.data).sum()
 
     # Returns loss rate.
-    return eval_loss / float(len(test_loader)), corrects, corrects * 100.0 / len(test_loader), len(test_loader)
+    return eval_loss / float(len(eval_loader)), corrects, corrects * 100.0 / len(eval_loader), len(eval_loader)
 
 train_loss = []
 valid_loss = []
