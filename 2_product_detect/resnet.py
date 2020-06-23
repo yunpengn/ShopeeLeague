@@ -36,7 +36,7 @@ train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=batch_
 eval_loader = torch.utils.data.DataLoader(dataset=eval_data, batch_size=batch_size, shuffle=False)
 
 # Creates the model.
-model = models.resnet152(pretrained=True)                           # Initializes ResNet with 152 layers.
+model = models.resnet50(pretrained=True)                            # Initializes ResNet with 50 layers.
 model.fc = torch.nn.Linear(2048, num_classes)                       # Changes the output FC (fully conected) layer.
 model = model.cuda()                                                # Uses GPU to accelerate the training.
 criterion = torch.nn.CrossEntropyLoss()                             # Defines the loss function.
