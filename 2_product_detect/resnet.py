@@ -52,7 +52,7 @@ def train():
     # Iterates through each image in train set.
     for image, label in train_loader:
         if count % print_batch_size == 0:
-            print('Progress => {}'.format(count))
+            print('Progress => {}/{}'.format(count, len(train_loader)))
 
         image = Variable(image.cuda())
         label = Variable(label.cuda())
@@ -80,7 +80,7 @@ def evaluate():
     # Iterates through each image in test set.
     for image, label in eval_loader:
         if count % print_batch_size == 0:
-            print('Progress => {}'.format(count))
+            print('Progress => {}/{}'.format(count, len(eval_loader)))
 
         image = Variable(image.cuda())
         label = Variable(label.cuda())
