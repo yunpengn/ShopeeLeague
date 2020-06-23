@@ -12,6 +12,8 @@ batch_size = 32
 learning_rate = 0.01
 # Defines epoch - # of times to train the model.
 epoch = 100
+# Defines the percentage of data used for training.
+training_percent = 0.8
 
 # Defines how to pre-process the image data.
 transform = transforms.Compose([transforms.RandomResizedCrop(200),
@@ -20,8 +22,10 @@ transform = transforms.Compose([transforms.RandomResizedCrop(200),
                                 transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])])
 
 # Defines where the image datasets are located.
-train_data = dsets.ImageFolder('./data/train', transform=transform)
-eval_data = dsets.ImageFolder('./data/test', transform=transform)
+input_data = dsets.ImageFolder('./data/train', transform=transform)
+train_size = int(training_percent * len(input_data))
+eval_size = len(input_data) - train_size
+train_data, eval_data = torch.utils.data.random_split(input_data, [train_size, eval_size])
 
 # Defines the input data.
 train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=batch_size, shuffle=True)
