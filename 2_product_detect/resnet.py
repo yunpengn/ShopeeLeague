@@ -84,25 +84,26 @@ accuracy = []
 for epoch in range(1, epoch + 1):
 	# Marks the start of current epoch.
 	print('-' * 10)
-	print('| # epoch {:3d}'.format(epoch))
+	print('| # epoch {:3d} | current time {}'.format(epoch, time.ctime()))
 	print('-' * 10)
 
 	# Performs training.
-    epoch_start_time = time.time()
+    start_time = time.time()
     loss = train()
     train_loss.append(loss * 1000.)
 
     # Prints result.
-    time_elapse = time.time() - epoch_start_time
+    time_elapse = time.time() - start_time
     print('| train | time: {:2.2f}s | loss {:5.6f}'.format(time_elapse, loss))
     print('-' * 10)
 
     # Performs evaluation.
+    start_time = time.time()
     loss, corrects, acc, size = evaluate()
     valid_loss.append(loss * 1000.)
     accuracy.append(acc)
 
     # Prints result.
-    time_elapse = time.time() - epoch_start_time
-    print('| eval | time: {:2.2f}s | loss {:.4f} | accuracy {}%({}/{})'.format(time_elapse, loss, acc, corrects, size))
+    time_elapse = time.time() - start_time
+    print('| eval | time: {:2.2f}s | loss {:.4f} | accuracy {}% ({}/{})'.format(time_elapse, loss, acc, corrects, size))
     print('-' * 10)
