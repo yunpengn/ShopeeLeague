@@ -60,8 +60,8 @@ def evaluate():
 	# Enables the evaluation mode.
     model.eval()
 
-    corrects = 0
     eval_loss = 0
+    corrects = 0
 
     # Iterates through each image in test set.
     for image, label in eval_loader:
