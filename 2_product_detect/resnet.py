@@ -34,10 +34,6 @@ model = model.cuda()												# Uses GPU to accelerate the training.
 criterion = torch.nn.CrossEntropyLoss()								# Defines the loss function.
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)	# Defines the optimizer function.
 
-train_loss = []
-valid_loss = []
-accuracy = []
-
 def train():
 	# Enables the training mode.
     model.train()
@@ -80,8 +76,9 @@ def evaluate():
     # Returns loss rate.
     return eval_loss / float(len(test_loader)), corrects, corrects * 100.0 / len(test_loader), len(test_loader)
 
-best_acc = None
-total_start_time = time.time()
+train_loss = []
+valid_loss = []
+accuracy = []
 
 # Repeats for # of times.
 for epoch in range(1, epoch + 1):
