@@ -86,6 +86,10 @@ train_loss = []
 valid_loss = []
 accuracy = []
 
+print('Will start the training ...')
+print('-' * 30)
+print('-' * 30)
+
 # Repeats for # of times.
 for epoch in range(1, epoch + 1):
     # Marks the start of current epoch.
