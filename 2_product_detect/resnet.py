@@ -16,6 +16,8 @@ epoch = 100
 training_percent = 0.8
 # Defines the number of classes.
 num_classes = 42
+# Defines the batch size to print progress.
+print_batch_size = 50
 
 # Defines how to pre-process the image data.
 transform = transforms.Compose([transforms.RandomResizedCrop(200),
@@ -44,10 +46,14 @@ def train():
     # Enables the training mode.
     model.train()
 
+    count = 0
     total_loss = 0
 
     # Iterates through each image in train set.
     for image, label in train_loader:
+        if count % print_batch_size == 0:
+            print('Progress => {}'.format(count))
+
         image = Variable(image.cuda())
         label = Variable(label.cuda())
         optimizer.zero_grad()
@@ -58,6 +64,7 @@ def train():
         optimizer.step()
 
         total_loss += loss.item()
+        count += 1
 
     # Returns loss rate.
     return total_loss / float(len(train_loader))
@@ -66,11 +73,15 @@ def evaluate():
     # Enables the evaluation mode.
     model.eval()
 
+    count = 0
     eval_loss = 0
     corrects = 0
 
     # Iterates through each image in test set.
     for image, label in eval_loader:
+        if count % print_batch_size == 0:
+            print('Progress => {}'.format(count))
+
         image = Variable(image.cuda())
         label = Variable(label.cuda())
         pred = model(image)
@@ -78,6 +89,7 @@ def evaluate():
 
         eval_loss += loss.item()
         corrects += (torch.max(pred, 1)[1].view(label.size()).data == label.data).sum()
+        count += 1
 
     # Returns loss rate.
     return eval_loss / float(len(eval_loader)), corrects, corrects * 100.0 / len(eval_loader), len(eval_loader)
