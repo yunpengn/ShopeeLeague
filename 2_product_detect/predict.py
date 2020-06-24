@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 import time
 import torch
 import torchvision.transforms as transforms
@@ -7,7 +8,7 @@ from PIL import Image
 from torch.autograd import Variable
 
 # Defines where the model is located.
-model_path = 'classify_resnet_152_15.pth'
+model_path = 'classify_resnet_152_16.pth'
 # Defines where the test data is located.
 test_folder = './data/test'
 # Defines how often to print progress.
@@ -23,8 +24,10 @@ transform = transforms.Compose([transforms.RandomResizedCrop(200),
 model = torch.load(model_path)
 model.eval()
 
-# Iterates over all images in test folder.
 count = 0
+output = []
+
+# Iterates over all images in test folder.
 for file_name in os.listdir(test_folder):
 	if count % print_batch_size == 0:
 		print('Progress: #{}'.format(count))
@@ -42,7 +45,14 @@ for file_name in os.listdir(test_folder):
 
 	# Predicts the label.
 	y = model(x)
-	label = torch.argmax(y, 1)
+	label = torch.argmax(y, 1).item()
+
+    # Appends to output.
+    output.append(file_name, label)
 
 	# Increments the counter.
 	count += 1
+
+# Saves the result.
+result = pd.DataFrame(lst, columns =['filename', 'category'])
+result.to_csv('output.csv', index=False)
