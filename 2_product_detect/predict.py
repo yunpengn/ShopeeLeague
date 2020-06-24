@@ -30,7 +30,7 @@ output = []
 # Iterates over all images in test folder.
 for file_name in os.listdir(test_folder):
     if count % print_batch_size == 0:
-        print('Progress: #{} | time: {}'.format(count, time.ctime()))
+        print('Progress: #{:5d} | time: {}'.format(count, time.ctime()))
 
     # Checks the file type.
     if not file_name.endswith('.jpg'):
