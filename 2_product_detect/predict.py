@@ -4,9 +4,10 @@ import torch
 import torchvision.transforms as transforms
 
 from PIL import Image
+from torch.autograd import Variable
 
 # Defines where the model is located.
-model_path = 'classify_resnet_152_10.pth'
+model_path = 'classify_resnet_152_15.pth'
 # Defines where the test data is located.
 test_folder = './data/test'
 # Defines how often to print progress.
@@ -35,8 +36,9 @@ for file_name in os.listdir(test_folder):
 
 	# Loads the image.
 	file_path = os.path.join(test_folder, file_name)
-	image = Image.open(file_path).convert('RGB')
-	x = transform(image)
+	image_raw = Image.open(file_path).convert('RGB')
+	image = transform(image_raw).float()
+    x = Variable(image.cuda()).unsqueeze(0)
 
 	# Predicts the label.
 	y = model(x)
