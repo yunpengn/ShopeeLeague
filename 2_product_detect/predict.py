@@ -48,7 +48,7 @@ for file_name in os.listdir(test_folder):
     label = torch.argmax(y, 1).item()
 
     # Appends to output.
-    output.append(file_name, label)
+    output.append([file_name, label])
 
     # Increments the counter.
     count += 1
