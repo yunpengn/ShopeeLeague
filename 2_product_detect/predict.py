@@ -8,7 +8,7 @@ from PIL import Image
 from torch.autograd import Variable
 
 # Defines where the model is located.
-model_path = 'classify_resnet_152_16.pth'
+model_path = 'classify_resnet_152_19.pth'
 # Defines where the test data is located.
 test_folder = './data/test'
 # Defines how often to print progress.
@@ -30,7 +30,7 @@ output = []
 # Iterates over all images in test folder.
 for file_name in os.listdir(test_folder):
     if count % print_batch_size == 0:
-        print('Progress: #{}'.format(count))
+        print('Progress: #{} | time: {}'.format(count, time.ctime()))
 
     # Checks the file type.
     if not file_name.endswith('.jpg'):
@@ -54,5 +54,5 @@ for file_name in os.listdir(test_folder):
     count += 1
 
 # Saves the result.
-result = pd.DataFrame(lst, columns =['filename', 'category'])
+result = pd.DataFrame(output, columns =['filename', 'category'])
 result.to_csv('output.csv', index=False)
