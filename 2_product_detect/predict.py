@@ -47,7 +47,7 @@ for index, row in pd.read_csv('./data/test.csv').iterrows():
     label = torch.argmax(y, 1).item()
 
     # Appends to output.
-    output.append([file_name, label])
+    output.append([file_name, '{:03d}'.format(label)])
 
 # Saves the result.
 result = pd.DataFrame(output, columns =['filename', 'category'])
