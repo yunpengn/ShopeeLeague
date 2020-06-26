@@ -132,4 +132,4 @@ for epoch in range(1, epoch + 1):
 
     # Saves the trained model.
     print('Going to save the model ...')
-    torch.save(model, 'classify_resnet_152_{}.pth'.format(epoch))
+    torch.save(model, 'models/classify_resnet_152_{}.pth'.format(epoch))
