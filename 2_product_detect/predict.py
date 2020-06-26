@@ -24,13 +24,11 @@ transform = transforms.Compose([transforms.RandomResizedCrop(200),
 model = torch.load(model_path)
 model.eval()
 
-count = 0
-output = []
-
 # Iterates over all images in test folder.
-for file_name in os.listdir(test_folder):
-    if count % print_batch_size == 0:
-        print('Progress: #{:5d} | time: {}'.format(count, time.ctime()))
+output = []
+for index, row in pd.read_csv('./data/test.csv').iterrows():
+    if index % print_batch_size == 0:
+        print('Progress: #{:5d} | time: {}'.format(index, time.ctime()))
 
     # Checks the file type.
     if not file_name.endswith('.jpg'):
@@ -38,7 +36,7 @@ for file_name in os.listdir(test_folder):
         continue
 
     # Loads the image.
-    file_path = os.path.join(test_folder, file_name)
+    file_path = os.path.join(test_folder, row['filename'])
     image_raw = Image.open(file_path).convert('RGB')
     image = transform(image_raw).float()
     x = Variable(image.cuda()).unsqueeze(0)
@@ -49,9 +47,6 @@ for file_name in os.listdir(test_folder):
 
     # Appends to output.
     output.append([file_name, label])
-
-    # Increments the counter.
-    count += 1
 
 # Saves the result.
 result = pd.DataFrame(output, columns =['filename', 'category'])
