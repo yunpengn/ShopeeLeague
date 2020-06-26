@@ -31,12 +31,13 @@ for index, row in pd.read_csv('./data/test.csv').iterrows():
         print('Progress: #{:5d} | time: {}'.format(index, time.ctime()))
 
     # Checks the file type.
+    file_name = row['filename']
     if not file_name.endswith('.jpg'):
         print('Skip for file {} due to abnormal extension name.'.format(file_name))
         continue
 
     # Loads the image.
-    file_path = os.path.join(test_folder, row['filename'])
+    file_path = os.path.join(test_folder, file_name)
     image_raw = Image.open(file_path).convert('RGB')
     image = transform(image_raw).float()
     x = Variable(image.cuda()).unsqueeze(0)
