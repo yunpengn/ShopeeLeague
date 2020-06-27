@@ -8,7 +8,7 @@ from PIL import Image
 from torch.autograd import Variable
 
 # Defines where the model is located.
-model_path = 'models/classify_resnet_152_50.pth'
+model_path = 'models/classify_resnet_152_80.pth'
 # Defines where the test data is located.
 test_folder = './data/test'
 # Defines how often to print progress.
