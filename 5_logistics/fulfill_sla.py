@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 # Reads the input.
-orders = pd.read_csv('orders_sample.csv')
+orders = pd.read_csv('orders.csv')
 
 # Defines the SLA matrix.
 time_sla = {
@@ -20,19 +20,20 @@ time_sla = {
 
 # Defines some datetime units.
 days = {
-  'mon':0,
-  'tue':1,
-  'wed':2,
-  'thu':3,
-  'fri':4,
-  'sat':5,
-  'sun':6
+  'mon': 0,
+  'tue': 1,
+  'wed': 2,
+  'thu': 3,
+  'fri': 4,
+  'sat': 5,
+  'sun': 6
 }
 delta_day = timedelta(days=1)
 h1 = datetime.strptime('2020-03-08', '%Y-%m-%d').date()
 h2 = datetime.strptime('2020-03-25', '%Y-%m-%d').date()
 h3 = datetime.strptime('2020-03-30', '%Y-%m-%d').date()
 h4 = datetime.strptime('2020-03-31', '%Y-%m-%d').date()
+hard_limit = 15
 
 # Defines how to calculate # of working days.
 def num_working_days(start_timestamp, end_timestamp):
@@ -41,10 +42,12 @@ def num_working_days(start_timestamp, end_timestamp):
 
   dt = date_start + delta_day
   day_count = 0
-  while dt <= date_end:
+  while dt <= date_end and day_count < hard_limit:
+    # Counts the number of working days.
     if dt.weekday() != days['sun'] and dt not in [h1, h2, h3, h4]:
       day_count += 1
-      dt += delta_day
+    
+    dt += delta_day
 
   return day_count
 
@@ -58,7 +61,7 @@ total_size = len(orders)
 for index, row in orders.iterrows():
   # Prints progess.
   if count % print_batch_size == 0:
-    print('Current progress: %6d / %d' % (count, total_size))
+    print('Current progress: %7d / %d' % (count, total_size))
 
   # Retrieves time-based data.
   order_id    = row['orderid']
