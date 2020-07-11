@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date
 from datetime import datetime
+from datetime import timedelta
 import math
 import numpy as np
 import pandas as pd
@@ -16,15 +18,41 @@ time_sla = {
   'mindanao': {'manila': 7, 'luzon': 7, 'visayas': 7, 'mindanao': 7}
 }
 
+# Defines some datetime units.
+days = {
+  'mon':0,
+  'tue':1,
+  'wed':2,
+  'thu':3,
+  'fri':4,
+  'sat':5,
+  'sun':6
+}
+delta_day = timedelta(days=1)
+h1 = datetime.strptime('2020-03-08', '%Y-%m-%d').date()
+h2 = datetime.strptime('2020-03-25', '%Y-%m-%d').date()
+h3 = datetime.strptime('2020-03-30', '%Y-%m-%d').date()
+h4 = datetime.strptime('2020-03-31', '%Y-%m-%d').date()
+
+# Defines how to calculate # of working days.
+def num_working_days(start_timestamp, end_timestamp):
+  date_start = datetime.fromtimestamp(start_timestamp).date()
+  date_end   = datetime.fromtimestamp(end_timestamp).date()
+
+  dt = date_start + delta_day
+  day_count = 0
+  while dt <= date_end:
+    if dt.weekday() != days['sun'] and dt not in [h1, h2, h3, h4]:
+      day_count += 1
+      dt += delta_day
+
+  return day_count
+
 # Defines some useful variables.
 result = []
 count = 0
 print_batch_size = 1000
 total_size = len(orders)
-
-# Defines how to calculate # of working days.
-def num_working_days(start_timestamp, end_timestamp):
-  return 0
 
 # Iterates over each row in the dataframe.
 for index, row in orders.iterrows():
