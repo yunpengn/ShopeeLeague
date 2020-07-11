@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import math
 import numpy as np
 import pandas as pd
 
@@ -31,7 +32,7 @@ for index, row in orders.iterrows():
   order_id    = row['orderid']
   time_pick   = int(row['pick'])
   time_1st    = int(row['1st_deliver_attempt'])
-  time_2nd    = int(row['2nd_deliver_attempt'])
+  time_2nd    = row['2nd_deliver_attempt']
 
   # Retrieves standard delivery SLA.
   city_buyer  = row['buyeraddress'].split(' ')[-1]
@@ -43,7 +44,7 @@ for index, row in orders.iterrows():
   is_late = False
   if num_working_dayas(time_pick, time_1st) > sla_1st:
     is_late = True
-  elif num_working_dayas(time_1st, time_2nd) > sla_2nd:
+  elif not math.isnan(time_2nd) and num_working_dayas(time_1st, int(time_2nd)) > sla_2nd:
     is_late = True
 
   # Appends to result.
