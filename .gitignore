@@ -133,4 +133,4 @@ dmypy.json
 
 # Datasets
 data/
-.csv
+*.csv
