@@ -9,7 +9,7 @@ import pandas as pd
 products = pd.read_csv('test_tcn.csv')
 
 # Defines the translator.
-translator = Translator()
+translator = Translator(service_urls=['translate.google.com.sg'])
 
 # Defines some useful variables.
 result = []
