@@ -28,7 +28,7 @@ for index, row in products.iterrows():
   title_output = translator.translate(title_input, src='zh-tw', dest='en')
 
   # Saves the translated text.
-  result.append([title_output])
+  result.append([title_output.text])
   count += 1
 
 # Writes the output.
