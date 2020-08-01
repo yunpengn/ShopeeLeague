@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from sklearn.compose         import ColumnTransformer
-from sklearn.ensemble        import RandomForestRegressor
+from sklearn.ensemble        import RandomForestClassifier
 from sklearn.pipeline        import Pipeline
 from sklearn.impute          import SimpleImputer
 from sklearn.model_selection import train_test_split
@@ -40,7 +40,7 @@ transformer = ColumnTransformer(transformers=[
 	('numerical',   numerical_transformer,   numerical_columns)])
 
 # Defines the model.
-model = RandomForestRegressor(n_estimators=100, n_jobs=2, random_state=0, verbose=2)
+model = RandomForestClassifier(n_estimators=100, n_jobs=2, random_state=0, verbose=2)
 
 # Defines the entire pipeline.
 pipeline = Pipeline(steps=[
