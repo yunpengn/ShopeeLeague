@@ -40,7 +40,7 @@ transformer = ColumnTransformer(transformers=[
 	('numerical',   numerical_transformer,   numerical_columns)])
 
 # Defines the model.
-model = RandomForestRegressor(n_estimators=100, random_state=0, verbose=1)
+model = RandomForestRegressor(n_estimators=100, random_state=0, verbose=2)
 
 # Defines the entire pipeline.
 pipeline = Pipeline(steps=[
