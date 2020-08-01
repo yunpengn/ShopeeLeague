@@ -40,7 +40,7 @@ transformer = ColumnTransformer(transformers=[
 	('numerical',   numerical_transformer,   numerical_columns)])
 
 # Defines the model.
-model = RandomForestRegressor(n_estimators=100, random_state=0, verbose=2)
+model = RandomForestRegressor(n_estimators=100, n_jobs=2, random_state=0, verbose=2)
 
 # Defines the entire pipeline.
 pipeline = Pipeline(steps=[
@@ -49,3 +49,6 @@ pipeline = Pipeline(steps=[
 
 # Tries to train the model.
 pipeline.fit(input_X, input_y)
+
+# Tries to score the model.
+pipeline.score(validate_X, validate_y)
